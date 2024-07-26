@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDoS Attack</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        input {
+            background-color: #222;
+            color: #0f0;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        button {
+            background-color: #0f0;
+            color: #1e1e1e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Send Attack</h1>
+        <form id="attackForm">
+            <input type="text" id="ip" placeholder="IP Address" required><br>
+            <input type="text" id="port" placeholder="Port" required><br>
+            <input type="number" id="time" placeholder="Seconds" required><br>
+            <button type="submit">Send Attack</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('attackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const ip = document.getElementById('ip').value;
+            const port = document.getElementById('port').value;
+            const time = document.getElementById('time').value;
+
+            fetch('/send-attack', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ip, port, time })
+            })
+            .then(response => response.text())
+            .then(result => alert(result))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
